@@ -1,5 +1,6 @@
 .item {
     color: blueviolet;
+
 }
 
 .item img {
@@ -7,3 +8,9 @@
     height: 50px;
     border-radius: 50% ;
 }
+
+.item span {
+
+    padding: 10px 20px;
+}
+
