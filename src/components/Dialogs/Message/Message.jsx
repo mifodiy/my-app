@@ -4,6 +4,7 @@ const Message = (props) => {
     return (
         <div className={s.message}>
             {props.massage}
+
         </div>
     )
 }

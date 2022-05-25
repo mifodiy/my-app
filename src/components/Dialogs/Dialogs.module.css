@@ -7,6 +7,15 @@
 
 }
 
+.dialog a{
+    color: darkslateblue;
+    text-decoration: none;
+}
+
+.dialog a.activeLink{
+    color: black;
+}
+
 .dialogItems {
 
 }
@@ -16,9 +25,15 @@
 }
 
 .messages {
-
 }
 
 .message {
+
+}
+
+.messages textarea {
+    width: 250px;
+    height: 80px;
+    margin-top: 20px;
 
 }

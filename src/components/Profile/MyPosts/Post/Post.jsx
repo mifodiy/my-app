@@ -6,7 +6,12 @@ const Post = (props) => {
         <div className={s.item}>
             <img src='https://shapka-youtube.ru/wp-content/uploads/2021/02/avatarka-dlya-skaypa-dlya-parney.jpg'/>
             <span>{props.message}</span>
-            <span className={s.textMessage}>like:{props.likeCount}</span>
+            <div><span className={s.textMessage}>
+                <button className={s.likeButton}>
+
+                    <img className={s.imgLike} src='https://w7.pngwing.com/pngs/417/448/png-transparent-like-button-computer-icons-player-hand-thumb-signal-desktop-wallpaper.png'/>
+                         {props.likeCount}</button></span></div>
+
         </div>
     )
 }
