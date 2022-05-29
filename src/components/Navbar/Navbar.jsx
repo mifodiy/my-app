@@ -1,7 +1,6 @@
 import './Navbar.module.css';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
-import BestFriends from "./BestFriends/BestFriends";
 import BestFriendsContainer from "./BestFriends/BestFriendsContainer";
 
 
