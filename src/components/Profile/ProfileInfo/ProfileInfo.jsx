@@ -5,6 +5,7 @@ const ProfileInfo = (props) => {
     if (!props.profileInfo){
         return <Preloader/>
     }
+
     return (
         <div>
             <div className={s.cover}>
