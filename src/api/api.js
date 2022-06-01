@@ -29,3 +29,9 @@ export const authUserAPI = {
         return items.get(`auth/me`)
     }
 }
+
+export const profileAPI = {
+    getProfile(userId) {
+        return items.get(`profile/`+userId)
+    }
+}

@@ -44,4 +44,10 @@ export let updateNewPostText = (text) => {
 export let setProfileUser = (profileInfo) =>{
     return{type:SET_PROFILE_USER, profileInfo}
 }
+
+// export const getProfileUsere = () => {
+//     return (dispatch) => {
+//
+//     }
+// }
 export default profileReducer;
