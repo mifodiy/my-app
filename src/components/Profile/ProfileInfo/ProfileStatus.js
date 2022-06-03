@@ -35,7 +35,7 @@ class ProfileStatus extends React.Component {
 
     render() {
         return <div>{!this.state.editMode &&
-        <div onDoubleClick={this.activeteEditMode}>{this.props.status}</div>}
+        <div onDoubleClick={this.activeteEditMode}>My status: {this.props.status}</div>}
             {this.state.editMode &&
             <div><input onChange={this.onChangeStatus}
                         onBlur={this.deactiveteEditMode}

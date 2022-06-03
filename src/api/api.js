@@ -27,6 +27,9 @@ export const followUsersAPI = {
 export const authUserAPI = {
     checkAuth(){
         return items.get(`auth/me`)
+    },
+    singIn(formData){
+        return items.post(`auth/login`,{formData})
     }
 }
 
