@@ -1,12 +1,18 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
-import handleSubmit from "redux-form/lib/handleSubmit";
 import {authUserAPI} from "../../api/api";
+import {Input} from "../common/FormControls/FormControls";
+import {maxElementLength, required} from "../../util/validators/validators";
+import {connect} from "react-redux";
+import {singIn} from "../../redux/auth-reducer";
+import {compose} from "redux";
+
+const maxLength20 = maxElementLength(20)
 
 const LoginForm = (props) => {
     return<form onSubmit={props.handleSubmit}>
-    <div><Field name={'login'} component={'input'} placeholder={'Login'}/></div>
-    <div><Field name={'password'} component={'input'} placeholder={'Password'}/></div>
+    <div><Field name={'email'} component={Input} validate={[required, maxLength20]} placeholder={'Email'}/></div>
+    <div><Field name={'password'} component={Input} validate={[required, maxLength20]} placeholder={'Password'}/></div>
         <div><Field name={'rememberMe'} component={'input'} type={'checkbox'} />Remember me </div>
     <div><button >Submit</button></div>
     </form>
@@ -18,9 +24,7 @@ let LoginReduxForm = reduxForm({
 })(LoginForm)
 const Login = (props) => {
     const onSubmit = (formData) => {
-        authUserAPI.singIn({email:formData.login,
-            password:formData.password,
-            rememberMe:formData.rememberMe})
+        props.singIn(formData.email, formData.password, formData.rememberMe)
     }
     return <div>
     <h1>Login</h1>
@@ -28,4 +32,7 @@ const Login = (props) => {
     </div>
 }
 
-export default Login
+export default
+    connect(null, {singIn})
+
+(Login)

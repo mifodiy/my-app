@@ -1,5 +1,6 @@
 import '../MyPosts.module.css';
 import s from './Post.module.css';
+import likeImg from '../../../../assets/image/pngwing.com.png'
 
 const Post = (props) => {
     return (
@@ -8,8 +9,7 @@ const Post = (props) => {
             <span>{props.message}</span>
             <div><span className={s.textMessage}>
                 <button className={s.likeButton}>
-
-                    <img className={s.imgLike} src='https://w7.pngwing.com/pngs/417/448/png-transparent-like-button-computer-icons-player-hand-thumb-signal-desktop-wallpaper.png'/>
+                    <img className={s.imgLike} src={likeImg}/>
                          {props.likeCount}</button></span></div>
 
         </div>

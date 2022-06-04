@@ -28,8 +28,11 @@ export const authUserAPI = {
     checkAuth(){
         return items.get(`auth/me`)
     },
-    singIn(formData){
-        return items.post(`auth/login`,{formData})
+    singIn(email, password, rememberMe = false){
+        return items.post(`auth/login`,{email, password, rememberMe})
+    },
+    singOut(){
+        return items.delete(`auth/login`)
     }
 }
 

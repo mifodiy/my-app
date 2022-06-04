@@ -42,5 +42,25 @@ export const checkAuth = () => {
     }
 }
 
+export const singIn = (email, password, rememberMe) => {
+    return (dispatch) => {
+        authUserAPI.singIn(email, password, rememberMe).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(checkAuth())
+            }
+        });
+    }
+}
+
+export const singOut = () => {
+    return (dispatch) => {
+        authUserAPI.singOut().then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(checkAuth)
+            }
+        });
+    }
+}
+
 
 export default authReducer;
