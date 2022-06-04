@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Header.module.css'
 import Header from "./Header";
 import {connect} from "react-redux";
-import {checkAuth, setAuthUser} from "../../redux/auth-reducer";
+import {checkAuth, setAuthUser, singOut} from "../../redux/auth-reducer";
 import axios from "axios";
 import {authUserAPI} from "../../api/api";
 
@@ -19,4 +19,4 @@ const mapStateToProps = (state) =>({
         isAuth:state.auth.isAuth,
         login: state.auth.login
 })
-export default connect(mapStateToProps, {checkAuth})(HeaderContainer);
+export default connect(mapStateToProps, {checkAuth, singOut})(HeaderContainer);

@@ -6,6 +6,7 @@ import {maxElementLength, required} from "../../util/validators/validators";
 import {connect} from "react-redux";
 import {singIn} from "../../redux/auth-reducer";
 import {compose} from "redux";
+import {Redirect} from "react-router-dom";
 
 const maxLength20 = maxElementLength(20)
 
@@ -26,13 +27,16 @@ const Login = (props) => {
     const onSubmit = (formData) => {
         props.singIn(formData.email, formData.password, formData.rememberMe)
     }
+    if (props.isAuth){
+       return <Redirect to={'/profile'}/>
+    }
     return <div>
     <h1>Login</h1>
         <LoginReduxForm onSubmit={onSubmit}/>
     </div>
 }
-
-export default
-    connect(null, {singIn})
-
+const mapStateToProps = (state) => {
+   return {isAuth: state.auth.isAuth}
+}
+export default connect(mapStateToProps, {singIn})
 (Login)

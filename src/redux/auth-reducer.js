@@ -17,8 +17,7 @@ const authReducer = (state = initials, action) => {
         case SET_AUTH_USER: {
             return {
                 ...state,
-                ...action.data,
-                isAuth: true
+                ...action.data
             }
         }
 
@@ -27,8 +26,8 @@ const authReducer = (state = initials, action) => {
     }
 }
 
-export let setAuthUser = (userId, login, email) => {
-    return {type: SET_AUTH_USER, data:{userId,login,email}}
+export let setAuthUser = (userId, login, email, isAuth) => {
+    return {type: SET_AUTH_USER, data:{userId,login,email,isAuth}}
 }
 
 export const checkAuth = () => {
@@ -36,7 +35,7 @@ export const checkAuth = () => {
         authUserAPI.checkAuth().then(response => {
             if (response.data.resultCode === 0) {
                 let {id, login, email} = response.data.data
-                dispatch(setAuthUser(id,login,email));
+                dispatch(setAuthUser(id,login,email,true));
             }
         });
     }
@@ -56,7 +55,7 @@ export const singOut = () => {
     return (dispatch) => {
         authUserAPI.singOut().then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(checkAuth)
+                dispatch(setAuthUser(null,null,null,false))
             }
         });
     }
