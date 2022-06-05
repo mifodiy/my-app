@@ -1,4 +1,5 @@
 import {authUserAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_AUTH_USER = 'SET_AUTH_USER';
 
@@ -46,6 +47,8 @@ export const singIn = (email, password, rememberMe) => {
         authUserAPI.singIn(email, password, rememberMe).then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(checkAuth())
+            }else{
+                dispatch(stopSubmit("login", {_error: response.data.messages[0]}))
             }
         });
     }

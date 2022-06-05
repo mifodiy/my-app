@@ -7,10 +7,6 @@ import axios from "axios";
 import {authUserAPI} from "../../api/api";
 
 class HeaderContainer extends React.Component{
-    componentDidMount() {
-            this.props.checkAuth()
-    }
-
     render() {
         return <Header {...this.props}/>
     }
