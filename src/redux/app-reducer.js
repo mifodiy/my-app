@@ -30,8 +30,10 @@ export let initializedSuccess = () => {
 }
 
 export const initializeApp = () => {
+
     return (dispatch) => {
         let promise = dispatch(checkAuth())
+
         promise.then(() => {dispatch(initializedSuccess())})
 
     }
