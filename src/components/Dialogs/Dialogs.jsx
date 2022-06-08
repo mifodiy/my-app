@@ -5,17 +5,20 @@ import * as React from "react";
 import {Field, reduxForm} from "redux-form";
 import {Textarea} from "../common/FormControls/FormControls"
 import {maxElementLength, required} from "../../util/validators/validators";
+import {sendMessageCreator} from "../../redux/dialogs-reducer";
 
-const maxLength20 = maxElementLength(20);
-const DialogsForm = (props) => {
-    return <form onSubmit={props.handleSubmit}>
-                <Field name={'newMessage'}
-                       component={Textarea}
-                       validate={[required, maxLength20]}
-                       >
-                </Field>
-        <div><button>Enter</button></div>
-            </form>
+const maxLength200 = maxElementLength(200);
+
+const DialogsForm = ({handleSubmit}) => {
+    return <form onSubmit={handleSubmit}>
+        <Field name={'newMessage'}
+               component={Textarea}
+               validate={[required, maxLength200]}
+        />
+        <div>
+            <button>Enter</button>
+        </div>
+    </form>
 }
 
 let DialogReduxForm = reduxForm({
@@ -29,12 +32,12 @@ const Dialogs = (props) => {
     let messagesElements = state.messages.map(m => <Message massage={m.message}/>)
 
     let addMessage = (value) => {
-        props.sendMessage(value.newMessage)
+        props.sendMessageCreator(value.newMessage)
     }
 
     return (
         <div className={s.dialogs}>
-            <div className={s.dialogItems} >
+            <div className={s.dialogItems}>
                 {dialogsElements}
             </div>
             <div className={s.messages}>

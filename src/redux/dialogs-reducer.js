@@ -10,30 +10,22 @@ let initials =  {
         {id: '2', message: 'Hi people'},
         {id: '3', message: 'yo'},
     ],
-
 }
 
-
 const dialogsReducer = (state = initials, action) => {
-
     switch (action.type) {
         case SEND_MESSAGE: {
-            let body = action.value;
             return {
                 ...state,
-                messages: [...state.messages, {id: '4', message: body}],
-
+                messages: [...state.messages, {id: '4', message: action.value}],
             }
         }
         default: return state;
-
     }
 }
 
 export let sendMessageCreator = (value) => {
     return {type: SEND_MESSAGE, value}
 }
-
-
 
 export default dialogsReducer;

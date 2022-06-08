@@ -1,17 +1,12 @@
-import {authUserAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
 import {checkAuth} from "./auth-reducer";
 
 const INITIALIZE_SUCCESS = 'INITIALIZE_SUCCESS';
 
 let initials =  {
     initialize: false
-
 }
 
-
 const appReducer = (state = initials, action) => {
-
     switch (action.type) {
         case INITIALIZE_SUCCESS: {
             return {
@@ -19,9 +14,7 @@ const appReducer = (state = initials, action) => {
                 initialize: true
             }
         }
-
         default: return state;
-
     }
 }
 
@@ -36,7 +29,6 @@ export const initializeApp = () => {
             .then(() => {
                 dispatch(initializedSuccess());
             });
-
     }
 }
 

@@ -15,6 +15,7 @@ const ProfileStatusWithHook = (props) => {
     const onChangeStatus = (e) =>{
         setStatus(e.currentTarget.value)
     }
+
     const deactiveteEditMode = () => {
         setEditMode(false)
         props.updateStatus(status)
@@ -28,8 +29,6 @@ const ProfileStatusWithHook = (props) => {
                     onBlur={deactiveteEditMode}
                     value={status}/></div>}
     </div>
-
-
 }
 
 export default ProfileStatusWithHook

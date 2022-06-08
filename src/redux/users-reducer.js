@@ -1,4 +1,5 @@
 import {followUsersAPI, usersAPI} from "../api/api";
+import {updateObjectInArray} from "../util/object-helper";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -15,7 +16,6 @@ let initial = {
     currentPage: 1,
     isFetching: false,
     followingProgress: []
-
 };
 
 const usersReducer = (state = initial, action) => {
@@ -23,23 +23,16 @@ const usersReducer = (state = initial, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
-            }
+                users: updateObjectInArray(state.users, action.userId,
+                    "id", {followed: true})
 
+            }
         case UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(state.users, action.userId,
+                    "id", {followed: false})
+
             }
         }
         case SET_USERS: {
@@ -64,7 +57,6 @@ const usersReducer = (state = initial, action) => {
         }
         default:
             return state
-
     }
 }
 
@@ -115,47 +107,42 @@ export const toggleFollowingProgress = (isFetching, userId) => {
 }
 
 export const requestUsers = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(toggleIsFetching(false));
-            dispatch(setUsers(data.items));
-            dispatch(setUsersCount(54))//response.data.totalCount
-        });
+        let data = await usersAPI.getUsers(currentPage, pageSize)
+        dispatch(toggleIsFetching(false));
+        dispatch(setUsers(data.items));
+        dispatch(setUsersCount(54))//response.data.totalCount
     }
 }
 
 export const changeCurrentPage = (page, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true))
         dispatch(setCurrentPage(page))
-        usersAPI.getUsers(page, pageSize).then(data => {
-            dispatch(toggleIsFetching(false))
-            dispatch(setUsers(data.items));
-        });
+        let data = await usersAPI.getUsers(page, pageSize)
+        dispatch(toggleIsFetching(false))
+        dispatch(setUsers(data.items));
     }
 }
 
+const followUnfollowFlow = async (dispatch, userId, connectApi, tongleSucsess ) => {
+    dispatch(toggleFollowingProgress(true, userId))
+    let response = await connectApi
+    if (response.data.resultCode === 0) {
+        dispatch(tongleSucsess)
+    }
+    dispatch(toggleFollowingProgress(false, userId))
+}
+
 export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId))
-        followUsersAPI.follow(userId).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(followSucsess(userId))
-            }
-            dispatch(toggleFollowingProgress(false, userId))
-        });
+    return async (dispatch) => {
+        await followUnfollowFlow(dispatch, userId, followUsersAPI.follow(userId), followSucsess(userId))
     }
 }
 export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId))
-        followUsersAPI.unfollow(userId).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(unfollowSucsess(userId))
-            }
-            dispatch(toggleFollowingProgress(false, userId))
-        });
+    return async (dispatch) => {
+        await followUnfollowFlow(dispatch, userId, followUsersAPI.unfollow(userId), unfollowSucsess(userId))
     }
 }
 export default usersReducer

@@ -1,10 +1,9 @@
 import s from './../Dialogs.module.css'
 
-const Message = (props) => {
+const Message = ({massage}) => {
     return (
         <div className={s.message}>
-            {props.massage}
-
+            {massage}
         </div>
     )
 }
