@@ -20,7 +20,7 @@ export const Paginator = ({totalItemCount, pageSize, currentPage, onChangeCurren
         <span className={currentPage === p && s.currentPage}
               onClick={() => {
                   onChangeCurrentPage(p)
-              }}>{p}</span>)}
+              }}>{p}-</span>)}
         {countPortions > portionsNumber && <button onClick={() => setPortionsNumber(portionsNumber + 1)}>right</button>}
     </div>
 }

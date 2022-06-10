@@ -1,9 +1,11 @@
 import {profileAPI} from "../api/api";
+import actions from "redux-form/lib/actions";
 
 const ADD_POST = 'ADD_POST';
 const DELETE_POST = 'DELETE_POST'
 const SET_PROFILE_USER = 'SET_PROFILE_USER'
 const SET_STATUS = 'SET_STATUS'
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 let initials = {
     posts: [
@@ -37,9 +39,11 @@ const profileReducer = (state = initials, action) => {
             return {...state, profileInfo: action.profileInfo}
         case SET_STATUS:
             return {...state, status: action.status}
-        default:
-            return state;
-    }
+        case SAVE_PHOTO_SUCCESS:
+            return {...state, profileInfo:{...state.profileInfo, photos:action.photos}}
+default:
+    return state;
+}
 }
 export let addPostActionCreator = (value) => {
     return {type: ADD_POST, value}
@@ -54,6 +58,9 @@ export let setProfileUser = (profileInfo) => {
 }
 export let setStatus = (status) => {
     return {type: SET_STATUS, status}
+}
+export let savePhotoSuccess = (photos) => {
+    return {type: SAVE_PHOTO_SUCCESS, photos: photos}
 }
 
 export const getProfileUsers = (userId) => {
@@ -74,6 +81,13 @@ export const updateStatus = (status) => {
     return async (dispatch) => {
         let response = await profileAPI.updateStatus(status)
         dispatch(setStatus(status));
+    }
+}
+
+export const savePhoto = (file) => {
+    return async (dispatch) => {
+        let response = await profileAPI.uploadPhoto(file)
+        dispatch(savePhotoSuccess(response.data.data.photos));
     }
 }
 export default profileReducer;

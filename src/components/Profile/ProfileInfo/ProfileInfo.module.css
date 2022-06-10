@@ -7,3 +7,7 @@
     padding: 10px;
     margin-top: 10px;
 }
+
+.mainPhoto {
+    max-width: 200px;
+}

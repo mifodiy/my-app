@@ -45,5 +45,15 @@ export const profileAPI = {
     },
     updateStatus(status) {
         return items.put(`profile/status`, {status})
+    },
+    uploadPhoto(photo) {
+        const formData = new FormData();
+        formData.append("image", photo);
+
+        return items.put(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 }
