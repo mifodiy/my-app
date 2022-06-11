@@ -1,5 +1,7 @@
 import {profileAPI} from "../api/api";
 import actions from "redux-form/lib/actions";
+import {stopSubmit} from "redux-form";
+import {checkAuth} from "./auth-reducer";
 
 const ADD_POST = 'ADD_POST';
 const DELETE_POST = 'DELETE_POST'
@@ -88,6 +90,20 @@ export const savePhoto = (file) => {
     return async (dispatch) => {
         let response = await profileAPI.uploadPhoto(file)
         dispatch(savePhotoSuccess(response.data.data.photos));
+    }
+}
+
+export const saveProfileInfo = (data) => {
+    return async (dispatch,getState) => {
+        const userId = getState().auth.userId
+        const response = await profileAPI.saveProfileInfo(data)
+
+        if (response.data.resultCode === 0) {
+            dispatch(getProfileUsers(userId))
+        } else {
+            dispatch(stopSubmit("profile-form", {_error: response.data.messages[0]}))
+            return Promise.reject(response.data.messages[0]);
+        }
     }
 }
 export default profileReducer;
