@@ -28,11 +28,17 @@ export const authUserAPI = {
     checkAuth(){
         return items.get(`auth/me`)
     },
-    singIn(email, password, rememberMe = false){
-        return items.post(`auth/login`,{email, password, rememberMe})
+    singIn(email, password, rememberMe = false, captcha = null){
+        return items.post(`auth/login`,{email, password, rememberMe, captcha})
     },
     singOut(){
         return items.delete(`auth/login`)
+    }
+}
+
+export const securityAPI = {
+    getCaptchaUrl(){
+        return items.get(`security/get-captcha-url`)
     }
 }
 
